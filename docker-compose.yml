@@ -1,0 +1,92 @@
+# Adopt version 2 syntax:
+#   https://docs.docker.com/compose/compose-file/#/versioning
+version: '3.27'
+
+services:
+###########################
+# Setup the Apache container
+###########################
+    #httpd:
+    #    container_name: ${NAME_HTTPD_CONTAINER}
+    #    restart: always
+    #    image: httpd:${VALUE_HTTPD_VERSION}
+    #    ports:
+    #        - ${VALUE_HTTPD_PORT}:80
+    #        - 8001:8000
+    #    volumes:
+    #        - ./.docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+    #        - ./.docker/apache/vhosts/:/usr/local/apache2/conf/vhosts
+    #        - ./projecttmp/tmp/httpd/:/usr/local/apache2/tmp/httpd:rw
+    #        - ./projecttmp/logs/httpd/:/usr/local/apache2/logs:rw
+    #    volumes_from:
+    #        - php
+
+###########################
+# Setup the PHP container
+###########################
+    php:
+        container_name: ${NAME_PHP_CONTAINER}
+        restart: always
+        build: ./.docker/php/
+        volumes:
+            - ./project/:/home/project
+            - ./projecttmp/logs/php:/usr/local/projecttmp/log/php:rw
+            - ./projecttmp/logs/xdebug:/usr/local/projecttmp/log/xdebug:rw
+            - ./projecttmp/tmp/php:/usr/local/projecttmp/tmp/php:rw
+            - ./.docker/php/opcache-recommended.ini:/usr/local/etc/php/conf.d/opcache-recommended.ini:ro
+            - ./.docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini:ro
+            - ./.docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+            #- ./.docker/php/php-sendmail.ini:/usr/local/etc/php/conf.d/php-sendmail.ini:ro
+            #- ./.docker/php/ssmtp.conf:/etc/ssmtp/ssmtp.conf:ro
+            #- ./.docker/php/hosts:/etc/hosts:ro
+        ports:
+            - 8000:8000
+            
+
+###########################
+# Setup the Database (MariaDB) container
+###########################
+    mariadb:
+        container_name: ${NAME_MARIABD_CONTAINER}
+        restart: always
+        image: mariadb:${VALUE_MARIABD_VERSION}
+        volumes:
+            - ./projecttmp/logs/sgbd:/var/log/mysql:rw
+            - ./projecttmp/tmp/sgbd:/var/tmp/mysql:rw
+            - ./projecttmp/sgbd_data:/var/lib/mysql
+            - ./.docker/mariadb/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
+            - ./.docker/sgbd_data/0000_phpmyadmin.sql:/docker-entrypoint-initdb.d/0000_phpmyadmin.sql
+            # start sql
+            - ./.docker/sgbd_data/0001_domalara.sql:/docker-entrypoint-initdb.d/0001_domalara.sql
+            # stop sql
+        environment:
+            - MYSQL_ROOT_PASSWORD=${SGBD_ROOT_PASSWORD}
+        entrypoint:
+            sh -c "/usr/local/bin/docker-entrypoint.sh --character-set-server=latin1 --collation-server=latin1_swedish_ci"
+            
+###########################
+# Setup the PhpMyAdmin container
+###########################
+    phpmyadmin:
+        container_name: ${NAME_PHPMYADMIN_CONTAINER}
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        environment:
+            - PMA_PORT=3306
+            - PMA_HOST=mariadb
+            - PMA_USER=${SGBD_ROOT_USERNAME}
+            - PMA_PASSWORD=${SGBD_ROOT_PASSWORD}
+        ports:
+            - ${VALUE_PHPMYADMIN_PORT}:80
+        depends_on: 
+            - mariadb
+            
+###########################
+# Setup the mailhog container
+###########################
+    mailhog:
+        container_name: ${NAME_MAILHOG_CONTAINER}
+        image: mailhog/mailhog:${VALUE_MAILHOG_VERSION}
+        ports:
+            - ${VALUE_MAILHOG_DISPLAY_PORT}:8025
+            
