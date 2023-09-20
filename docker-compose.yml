@@ -4,43 +4,29 @@ version: '3.27'
 
 services:
 ###########################
-# Setup the Apache container
-###########################
-    #httpd:
-    #    container_name: ${NAME_HTTPD_CONTAINER}
-    #    restart: always
-    #    image: httpd:${VALUE_HTTPD_VERSION}
-    #    ports:
-    #        - ${VALUE_HTTPD_PORT}:80
-    #        - 8001:8000
-    #    volumes:
-    #        - ./.docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
-    #        - ./.docker/apache/vhosts/:/usr/local/apache2/conf/vhosts
-    #        - ./projecttmp/tmp/httpd/:/usr/local/apache2/tmp/httpd:rw
-    #        - ./projecttmp/logs/httpd/:/usr/local/apache2/logs:rw
-    #    volumes_from:
-    #        - php
-
-###########################
 # Setup the PHP container
 ###########################
-    php:
-        container_name: ${NAME_PHP_CONTAINER}
+    laravel:
+        container_name: ${NAME_LARAVEL_CONTAINER}
         restart: always
-        build: ./.docker/php/
+        build: ./.docker/laravel/
         volumes:
             - ./project/:/home/project
+            - ./.docker/laravel/startserver:/etc/init.d/startserver:rw
+            - ./.docker/laravel/updateProject.sh:/home/updateProject.sh:rw
+            - ./.env:/home/.env:rw
             - ./projecttmp/logs/php:/usr/local/projecttmp/log/php:rw
             - ./projecttmp/logs/xdebug:/usr/local/projecttmp/log/xdebug:rw
             - ./projecttmp/tmp/php:/usr/local/projecttmp/tmp/php:rw
-            - ./.docker/php/opcache-recommended.ini:/usr/local/etc/php/conf.d/opcache-recommended.ini:ro
-            - ./.docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini:ro
-            - ./.docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
-            #- ./.docker/php/php-sendmail.ini:/usr/local/etc/php/conf.d/php-sendmail.ini:ro
-            #- ./.docker/php/ssmtp.conf:/etc/ssmtp/ssmtp.conf:ro
-            #- ./.docker/php/hosts:/etc/hosts:ro
+            - ./.docker/laravel/opcache-recommended.ini:/usr/local/etc/php/conf.d/opcache-recommended.ini:ro
+            - ./.docker/laravel/php.ini:/usr/local/etc/php/conf.d/php.ini:ro
+            - ./.docker/laravel/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+            - ./projecttmp/logs/laravel:/var/log/symfony/laravel:rw
+            #- ./.docker/laravel/php-sendmail.ini:/usr/local/etc/php/conf.d/php-sendmail.ini:ro
+            #- ./.docker/laravel/ssmtp.conf:/etc/ssmtp/ssmtp.conf:ro
+            #- ./.docker/laravel/hosts:/etc/hosts:ro
         ports:
-            - 8000:8000
+            - ${VALUE_LARAVEL_PORT}:8000
             
 
 ###########################

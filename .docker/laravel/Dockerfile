@@ -1,7 +1,15 @@
 FROM php:fpm
 
+VOLUME "/var/log/symfony/"
+VOLUME "/var/log/symfony/"
+
 VOLUME "/home/project"
 WORKDIR "/home/project"
+
+COPY startserver /etc/init.d/
+
+RUN chmod +x /etc/init.d/startserver
+RUN update-rc.d startserver defaults
 
 RUN set -ex
 RUN apt update
@@ -59,6 +67,9 @@ RUN mkdir /var/composer
 ENV COMPOSER_HOME /var/composer  
 ENV COMPOSER_ALLOW_SUPERUSER 1 
 
+RUN composer global require laravel/installer
+RUN export PATH=$PATH:/var/composer/vendor/bin/
+
 WORKDIR "/home/project"
 
-CMD ["php-fpm"]
+CMD service startserver start && tail -F /var/log/laravel/error.log && php-fpm

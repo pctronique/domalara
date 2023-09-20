@@ -25,3 +25,7 @@ fi
 
 # creation du docker du projet
 docker-compose up -d
+
+./bin/createProject.sh
+#./bin/updateProject.sh
+./start.sh

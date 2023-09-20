@@ -22,7 +22,7 @@ else
     container=$1
     case "$container" in
         --php)
-            container=$NAME_SYMFONY_CONTAINER
+            container=$NAME_LARAVEL_CONTAINER
             ;;
     
         --mariadb)
