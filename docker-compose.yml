@@ -12,19 +12,19 @@ services:
         build: ./.docker/laravel/
         volumes:
             - ./project/:/home/project
-            - ./.docker/laravel/startserver:/etc/init.d/startserver:rw
-            - ./.docker/laravel/updateProject.sh:/home/updateProject.sh:rw
-            - ./.env:/home/.env:rw
-            - ./projecttmp/logs/php:/usr/local/projecttmp/log/php:rw
-            - ./projecttmp/logs/xdebug:/usr/local/projecttmp/log/xdebug:rw
-            - ./projecttmp/tmp/php:/usr/local/projecttmp/tmp/php:rw
+            - ./projecttmp/tmp/php:/var/tmp/php:rw
+            - ./projecttmp/logs/php:/var/log/php:rw
+            - ./projecttmp/logs/xdebug:/var/log/xdebug:rw
+            - ./projecttmp/logs/laravel:/var/log/laravel:rw
             - ./.docker/laravel/opcache-recommended.ini:/usr/local/etc/php/conf.d/opcache-recommended.ini:ro
-            - ./.docker/laravel/php.ini:/usr/local/etc/php/conf.d/php.ini:ro
             - ./.docker/laravel/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
-            - ./projecttmp/logs/laravel:/var/log/symfony/laravel:rw
-            #- ./.docker/laravel/php-sendmail.ini:/usr/local/etc/php/conf.d/php-sendmail.ini:ro
-            #- ./.docker/laravel/ssmtp.conf:/etc/ssmtp/ssmtp.conf:ro
-            #- ./.docker/laravel/hosts:/etc/hosts:ro
+            - ./.docker/laravel/php.ini:/usr/local/etc/php/conf.d/php.ini:ro
+            - ./.docker/laravel/updateProject.sh:/home/updateProject.sh:rw
+            - ./.docker/laravel/startserver:/etc/init.d/startserver:rw
+            - ./.env:/home/.env:rw
+            #- ./.docker/php/php-sendmail.ini:/usr/local/etc/php/conf.d/php-sendmail.ini:ro
+            #- ./.docker/php/ssmtp.conf:/etc/ssmtp/ssmtp.conf:ro
+            #- ./.docker/php/hosts:/etc/hosts:ro
         ports:
             - ${VALUE_LARAVEL_PORT}:8000
             
@@ -34,8 +34,8 @@ services:
 ###########################
     mariadb:
         container_name: ${NAME_MARIABD_CONTAINER}
-        restart: always
         image: mariadb:${VALUE_MARIABD_VERSION}
+        restart: always
         volumes:
             - ./projecttmp/logs/sgbd:/var/log/mysql:rw
             - ./projecttmp/tmp/sgbd:/var/tmp/mysql:rw
@@ -73,6 +73,7 @@ services:
     mailhog:
         container_name: ${NAME_MAILHOG_CONTAINER}
         image: mailhog/mailhog:${VALUE_MAILHOG_VERSION}
+        restart: always
         ports:
             - ${VALUE_MAILHOG_DISPLAY_PORT}:8025
             

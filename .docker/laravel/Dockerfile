@@ -1,8 +1,5 @@
 FROM php:fpm
 
-VOLUME "/var/log/symfony/"
-VOLUME "/var/log/symfony/"
-
 VOLUME "/home/project"
 WORKDIR "/home/project"
 
@@ -60,6 +57,9 @@ RUN docker-php-ext-install imap
 WORKDIR "/tmp"
 
 RUN pecl install -o -f xdebug
+
+COPY xdebug_extends.sh /tmp/
+RUN /tmp/xdebug_extends.sh
 
 # Install composer  
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer  
