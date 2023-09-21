@@ -280,7 +280,7 @@ RUN pecl install -o -f xdebug-3.2.2
 
 <br />
 
-Pour modifier la version des autres conteneurs, c'est dans le fichier " **docker-compose.yml** " :
+Pour modifier la version des autres conteneurs, c'est dans le fichier " **.env.example** " :
 ```
 VALUE_MARIABD_VERSION=focal
 VALUE_PHPMYADMIN_VERSION=latest
