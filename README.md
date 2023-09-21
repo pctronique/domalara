@@ -1,4 +1,5 @@
-# domalara (DOcker MAriadb SYMfony)
+# domalara (DOcker MAriadb LAravel)
+Par [pctronique](https://pctronique.fr/) <br />
 Version 1.0.0
 
 <details>
@@ -8,11 +9,12 @@ Version 1.0.0
         <a href="#présentation">Présentation</a>
         <ul>
             <li><a href="#l-avantage-d-utiliser-docker">L'avantage d'utiliser docker</a></li>
-            <li><a href="#conteneur-symfony">Conteneur symfony</a></li>
+            <li><a href="#conteneur-laravel">Conteneur laravel</a></li>
             <li><a href="#conteneur-mailhog">Conteneur mailhog</a></li>
             <li><a href="#conteneur-phpmyadmin">Conteneur phpmyadmin</a></li>
             <li><a href="#conteneur-mariadb">Conteneur mariadb</a></li>
             <li><a href="#conteneurs-sgbd">Conteneurs SGBD</a></li>
+            <li><a href="#les-fichiers-de-configurations">Les fichiers de configurations</a></li>
         </ul>
     </li>
     <li>
@@ -47,15 +49,18 @@ Version 1.0.0
 </details>
 
 ## Présentation
-La base docker pour un projet en symfony. Ceci est une base, vous pouvez le modifier selon vos besoins.<br />
+La base docker pour un projet en laravel. Ceci est une base, vous pouvez le modifier selon vos besoins.<br />
 > [!WARNING]
 > Vous devez installer docker pour pouvoir l'utiliser.
 
 <br />
-Vous devez placer votre code dans le dossier "**project/www/**".
+Vous devez placer votre code dans le dossier "**project/www/**". <br /> 
+
+> [!NOTE]
+> Le serveur démarre automatique au démarrage du conteneur, vous n'avez normalement pas besoin de le démarrer par vous-même.
 
 ### L'avantage d'utiliser docker
-Lorsque vous faites un projet avec docker vous devez transmettre la totalité du projet, les fichiers de création des conteneurs et le code. Pour ce projet, vous devez transmettre le contenu en totalité du dossier "**domasym**" (**que vous pouvez et surtout, devez le renommer au nom de votre projet**) dans un git.<br />
+Lorsque vous faites un projet avec docker vous devez transmettre la totalité du projet, les fichiers de création des conteneurs et le code. Pour ce projet, vous devez transmettre le contenu en totalité du dossier "**domalara**" (**que vous pouvez et surtout, devez le renommer au nom de votre projet**) dans un git.<br />
 Les avantages :<br />
 * Pas de programme à installer sur votre pc (à part docker et un éditeur ou IDE)
 * Travailler à plusieurs avec les mêmes conteneurs à l'identique
@@ -64,18 +69,18 @@ Les avantages :<br />
 <br /> Après installation des conteneurs, on peut directement continuer le code.
 <sup>(1) [Conteneur mariadb](#conteneur-mariadb)</sup>
 
-### Conteneur symfony
+### Conteneur laravel
 Il est conçu à partir de l'image du [docker php](https://hub.docker.com/_/php).<br />
 Il contiendra vos codes.<br />
 Il installe aussi dans le conteneur :<br />
-* [symfony](https://symfony.com/)
+* [laravel](https://laravel.com/)
 
 <br />
-Il y a plusieurs packages installés, vous pouvez les retrouver dans le fichier "**.docker/phpSymfony/Dockerfile**".
+Il y a plusieurs packages installés, vous pouvez les retrouver dans le fichier "**.docker/laravel/Dockerfile**".
 
 <br /> 
-C'est dans ce conteneur que vous allez placer vos codes angular, dans le dossier "**project/www/**" (qui est lié au conteneur).
-<br /><img src="./images/screen70.jpg" alt="exemple nodejs server" width="300" height="175"><br />
+C'est dans ce conteneur que vous allez placer vos codes laravel, dans le dossier "**project/www/**" (qui est lié au conteneur).
+<br /><img src="./images/Screenshot_20230921_104822.png" alt="exemple nodejs server" width="300" height="175"><br />
 
 ### Conteneur mailhog
 Il est conçu à partir de l'image du [docker mailhog](https://hub.docker.com/r/mailhog/mailhog/).<br />
@@ -91,10 +96,10 @@ Ce conteneur va vous permettre de visualiser votre base de données mariadb (SQL
 Il est conçu à partir de l'image du [docker mariadb](https://hub.docker.com/_/mariadb).<br />
 Ce conteneur contiendra votre base de donnée. Il est possible de visualiser son contenu à partir du [conteneur phpmyadmin](#conteneur-phpmyadmin)<br />
 Il est possible d'entrer des tables lors de sa création, pour se faire il faudra récupérer les tables sous format sql et les placer dans un dossier et modifier le fichier "**docker-compose.yml**".<br />
-J'ai mis en place un exemple avec la table people "**0001_domasym.sql**" :
+J'ai mis en place un exemple avec la table people "**0001_domalara.sql**" :
 ```
 # start data
-- ./.docker/sgbd_data/0001_domasym.sql:/docker-entrypoint-initdb.d/0001_domasym.sql
+- ./.docker/sgbd_data/0001_domalara.sql:/docker-entrypoint-initdb.d/0001_domalara.sql
 # stop data
 ```
 <br /><img src="./images/screen72.jpg" alt="exemple nodejs server" width="300" height="175"><br />
@@ -114,22 +119,30 @@ Ici je vais présenter quelques conteneurs SGBD et leurs visionneurs sous le for
 
 Ceci est une petite partie des [SGBD](https://fr.wikipedia.org/wiki/Syst%C3%A8me_de_gestion_de_base_de_donn%C3%A9es), vous pouvez vérifier la disponibilité de votre SGBD dans [docker hub](https://hub.docker.com/).
 
+### Les fichiers de configurations
+Vous pouvez configurer votre serveur ou le php :
+* php.ini : dans le dossier ".docker/laravel/"
+* xdebug.ini : dans le dossier ".docker/laravel/"
+> [!WARNING]
+> Si vous modifiez les configurations, il faudra redémarrer le conteneur : " [Server start|stop|restart](#server-start-stop-restart) ". 
+
+
 ## Création du conteneur (Docker)
 Vous devez avoir installé Docker. 
 Pour la création du conteneur docker pour le projet.
 ### Le fichier .env
 Modifier le contenu du fichier "**.env.example**" :
 ```
-NAME_PROJECT=domasym
-NAME_SYMFONY_CONTAINER=domasym_symfony
-NAME_MARIABD_CONTAINER=domasym_mariadb
-NAME_PHPMYADMIN_CONTAINER=domasym_phpmyadmin
-NAME_MAILHOG_CONTAINER=domasym_mailhog
+NAME_PROJECT=domalara
+NAME_LARAVEL_CONTAINER=domalara_laravel
+NAME_MARIABD_CONTAINER=domalara_mariadb
+NAME_PHPMYADMIN_CONTAINER=domalara_phpmyadmin
+NAME_MAILHOG_CONTAINER=domalara_mailhog
 ```
 Par le nom de votre projet, par exemple 'nameProject' :
 ```
 NAME_PROJECT=nameProject
-NAME_SYMFONY_CONTAINER=nameProject_symfony
+NAME_LARAVEL_CONTAINER=nameProject_laravel
 NAME_MARIABD_CONTAINER=nameProject_mariadb
 NAME_PHPMYADMIN_CONTAINER=nameProject_phpmyadmin
 NAME_MAILHOG_CONTAINER=nameProject_mailhog
@@ -149,10 +162,10 @@ Si vous avez besoin de modifier le port, merci de le faire dans le fichier "**.e
 
 <br />Un port de votre pc peut être utilisé par un autre projet, il faudra donc modifier celui-ci. Ce qui est vrai sur un pc, ne le sera pas sur les autres, donc on ne modifit pas les valeurs dans le fichier "**.env.example**".<br />
 Il est préférable d'incrémenter à l'identique les ports du projet.<br />
-Si je dois incrémenter de 9 un des ports, je le fais aussi pour les autres. Ceci évite de se perdre dans les ports disponibles.<br />
+Si je dois incrémenter de 9 un des ports, je le fais aussi pour les autres dans le fichier "**.env**". Ceci évite de se perdre dans les ports disponibles.<br />
 Exemple :<br />
 ```
-VALUE_SYMFONY_PORT=8009
+VALUE_LARAVEL_PORT=8009
 VALUE_PHPMYADMIN_PORT=8089
 VALUE_MAILHOG_DISPLAY_PORT=8029
 ```
@@ -190,12 +203,12 @@ Sur le projet actuel, on utilise les nouvelles versions ce qui peut poser des pr
 $ ./bin/terminal.sh
 # php -v
 PHP 8.2.10 (cli) (built: Sep  7 2023 06:04:45) (NTS)
-# symfony version
-Symfony CLI version 5.5.8 (c) 2021-2023 Fabien Potencier
+# laravel version
+laravel CLI version 5.5.8 (c) 2021-2023 Fabien Potencier
 # composer -V
 Composer version 2.6.3 2023-09-15 09:38:21
 ```
-Dand le fichier "**.docker/angular/Dockerfile**", remplacé :
+Dand le fichier "**.docker/laravel/Dockerfile**", remplacé :
 ```
 FROM php:fpm
 ```
@@ -209,6 +222,22 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 ```
 COPY --from=composer:2.6.3 /usr/bin/composer /usr/bin/composer
 ```
+Vous pouvez récupérer la version de xdebug avec [phpinfo](https://www.php.net/manual/fr/function.phpinfo.php) :
+```
+$ ./bin/terminal.sh
+# php -a
+php > phpinfo(INFO_GENERAL); 
+Zend Engine v4.2.10, Copyright (c) Zend Technologies
+    with Xdebug v3.2.2, Copyright (c) 2002-2023, by Derick Rethans
+```
+Le modifier dans le même fichier que la version du php :
+```
+RUN pecl install -o -f xdebug
+```
+```
+RUN pecl install -o -f xdebug-3.2.2
+```
+
 
 <br />
 
@@ -240,7 +269,7 @@ $ ./bin/terminal.sh
 ```
 
 ### Dans Dockerfile
-Quand vous installez un package, vous devez aussi le rajouter dans le fichier "**.docker/linux_agcc/Dockerfile**", pour le conserver. Au niveau des "**apt install**".
+Quand vous installez un package, vous devez aussi le rajouter dans le fichier "**.docker/laravel/Dockerfile**", pour le conserver. Au niveau des "**apt install**".
 ```
 RUN apt install name_package
 ```
@@ -250,9 +279,9 @@ Vous pouvez avoir besoin de visualiser les logs d'un conteneur si celui-ci ne d�
 ```
 $ ./bin/container_logs.sh
 Options:
-   --nodejs
-   --mongo
-   --mongo-express
+   --php
+   --mariadb
+   --phpmyadmin
    --mailhog
    --helps
    [id ou nom du conteneur]
@@ -262,17 +291,19 @@ Vous pouvez avoir besoin d'information sur l'un des conteneurs, pour trouver sa 
 ```
 $ ./bin/container_info.sh 
 Options:
-   --nodejs
-   --mongo
-   --mongo-express
+   --php
+   --mariadb
+   --phpmyadmin
    --mailhog
    --helps
    [id ou nom du conteneur]
 $ ./bin/container_info.sh --mailhog
 ```
 <br />
+
 > [!WARNING]
 > Il contient beaucoup d'information sous un format json et ce n'est pas facile de le lire sur le terminal, il est préférable de le mettre dans un fichier json.
+
 <br />
 Pour mettre les informations dans un fichier json :
 ```
@@ -283,17 +314,13 @@ $ ./bin/container_info.sh --mailhog >> mailhog_info.json
 Votre code devra être placé dans le dossier "**project/www**".
 
 ## Mini-projet
-Il y a un mini-projet symphony pour vous montrer un exemple, mais vous pouvez le retirer en suppriment le dossier "**project/www**".<br />
-> [!WARNING]
-> Ne surtout pas supprimer le fichier "**.gitignore**" du dossier "**project**".<br />
-> Ne surtout pas supprimer le fichier "**.env.local.example**" du dossier "**project**".
-<br />
+Il y a un mini-projet laravel pour vous montrer un exemple, mais vous pouvez le retirer en suppriment le dossier "**project/www**".<br />
 
-Lors de l'installation, il démarre le serveur symphony du mini-projet sur '**localhost:8000**' si vous n'avez pas modifié le port (sinon il faut modifier le numéro de port du lien) :
-<br /><img src="./images/screen70.jpg" alt="exemple angular server" width="300" height="175"><br />
+Lors de l'installation, il démarre le serveur laravel du mini-projet sur '**localhost:8000**' si vous n'avez pas modifié le port (sinon il faut modifier le numéro de port du lien) :
+<br /><img src="./images/Screenshot_20230921_104822.png" alt="exemple angular server" width="300" height="175"><br />
 Vous pouvez modifier le nom du dossier du projet dans le fichier "**.env.example**" et aussi dans le fichier "**.env**" :
 ```
-FOLDER_PROJECT_SYMFONY=www
+FOLDER_PROJECT_LARAVEL=www
 ```
 > [!NOTE]
 > Il est préférable de conserver ce nom.
@@ -303,26 +330,23 @@ FOLDER_PROJECT_SYMFONY=www
 ### Packages installés dans le mini-projet
 Lors de la création du projet, il y a l'installation de package que vous pouvez retrouver dans le fichier "**./bin/createProject.sh**"
 ```
-docker exec $NAME_SYMFONY_CONTAINER bash -c "cd $FOLDER_PROJECT_SYMFONY/ && composer require symfony/mailer"
-docker exec $NAME_SYMFONY_CONTAINER bash -c "cd $FOLDER_PROJECT_SYMFONY/ && composer require symfony/sendgrid-mailer"
-docker exec $NAME_SYMFONY_CONTAINER bash -c "cd $FOLDER_PROJECT_SYMFONY/ && composer require symfony/maker-bundle --dev"
-docker exec $NAME_SYMFONY_CONTAINER bash -c "cd $FOLDER_PROJECT_SYMFONY/ && composer require symfony/orm-pack --dev --with-all-dependencies"
+#vide
 ```
 > [!NOTE]
 > Vous pouvez les retirer si vous en avez pas besoin.
 
-## Les commandes symfony dans le mini-projet
-Vous allez avoir besoin de faire des commandes symfony sur votre code, pour ce faire :
+## Les commandes laravel dans le mini-projet
+Vous allez avoir besoin de faire des commandes laravel sur votre code, pour ce faire :
 ```
 $ ./bin/terminal.sh
 # cd www/
-# symfony console make:controller BrandNewController
+# 
 ```
 
 ## Visualiser les messages de la console ou les logs
 Les messages de la console sont transmis dans un fichier et ne sont pas visibles sur le terminal.<br />
-* Message sur la console dans le fichier : "**projecttmp/logs/symfony/symfony_out.log**".
-* Message d'erreur sur la console dans le fichier : "**projecttmp/logs/symfony/symfony_error.log**".
+* Message sur la console dans le fichier : "**projecttmp/logs/laravel/laravel_out.log**".
+* Message d'erreur sur la console dans le fichier : "**projecttmp/logs/laravel/laravel_error.log**".
 
 ## Server start|stop|restart
 Vous pouvez avoir besoin de redémarrer votre serveur, il est possible de le faire facilement avec une commande :
@@ -333,36 +357,8 @@ Options:
    stop
    restart
    reload
-   log
    --helps
 $ ./bin/server.sh start
 $ ./bin/server.sh stop
 $ ./bin/server.sh restart
 ```
-
-pecl install -o -f xdebug
-
-composer config -g repo.packagist composer https://packagist.org
-
-composer global require laravel/installer
-
-./var/composer/vendor/laravel/installer/bin/laravel
-./var/composer/vendor/bin/laravel
-
-/var/composer/vendor/bin/laravel
-/var/composer/vendor/laravel/installer/bin/laravel
-
-ln /var/composer/vendor/laravel/installer/bin/laravel /usr/bin/laravel
-composer global require autoload --dev
-
-composer create-project laravel/laravel www
-
-php artisan serve
-
-php artisan serve --host 0.0.0.0
-
-composer global require laravel/installer
-export PATH=$PATH:/var/composer/vendor/bin/
-laravel new www
-
-php artisan serve --host 0.0.0.0 >> ../../projecttmp/logs/laravel/laravel_out.log 2>> ../../projecttmp/logs/laravel/laravel_error.log & 
