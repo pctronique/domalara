@@ -211,7 +211,7 @@ $ ./install.sh
 ```
 
 ### Modifier le fichier d'intallation
-Après l'installation, il faudra modifier le contenu du fichier " **install.sh** " (si le projet n'a pas été créée) :
+Après l'installation, il faudra modifier le contenu du fichier " **install.sh** " (pour la première installation du projet) :
 ```
 ./bin/createProject.sh
 #./bin/updateProject.sh
