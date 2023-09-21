@@ -55,7 +55,7 @@ La base docker pour un projet en laravel. Ceci est une base, vous pouvez le modi
 > Vous devez installer docker pour pouvoir l'utiliser.
 
 <br />
-Vous devez placer votre code dans le dossier "**project/www/**".
+Vous devez placer votre code dans le dossier "**project/www/**" .
 <br /> 
 
 > [!NOTE]
