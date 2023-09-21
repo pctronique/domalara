@@ -24,7 +24,6 @@ Version 1.0.0
             <li><a href="#les-ports-utilisés-par-docker">Les ports utilisés par docker</a></li>
             <li><a href="#modifier-l-adresse-de-port">Modifier l'adresse de port</a></li>
             <li><a href="#installer-le-conteneur">Installer le conteneur</a></li>
-            <li><a href="#modifier-le-fichier-d-intallation">Modifier le fichier d'intallation</a></li>
             <li><a href="#modifier-les-versions">Modifier les versions</a></li>
         </ul>
     </li>
@@ -40,12 +39,13 @@ Version 1.0.0
     <li>
         <a href="#mini-projet">Mini projet</a>
         <ul>
-            <li><a href="#packages-installés-dans-le-mini-projet">Packages installés dans le mini-projet</a></li>
+            <li><a href="#les-fichiers-de-configurations-du-projet">Les fichiers de configurations du projet</a></li>
         </ul>
     </li>
     <li><a href="#les-commandes-angular-dans-le-mini-projet">Les commandes angular dans le mini-projet</a></li>
     <li><a href="#visualiser-les-messages-de-la-console-ou-les-logs">Visualiser les messages de la console ou les logs</a></li>
     <li><a href="#server-start-stop-restart">Server start|stop|restart</a></li>
+    <li><a href="#en-cas-de-problème-lors-d-installation">En cas de problème lors d'installation</a></li>
   </ol>
 </details>
 
@@ -124,33 +124,21 @@ Ceci est une petite partie des [SGBD](https://fr.wikipedia.org/wiki/Syst%C3%A8me
 Vous pouvez configurer votre serveur ou le php :
 * php.ini : dans le dossier ".docker/laravel/"
 * xdebug.ini : dans le dossier ".docker/laravel/"
+
 > [!WARNING]
 > Si vous modifiez les configurations, il faudra redémarrer le conteneur : " [Server start|stop|restart](#server-start-stop-restart) ". 
 
 
 ## Création du conteneur (Docker)
 Vous devez avoir installé Docker. 
-Pour la création du conteneur docker pour le projet.
+Pour la création du conteneur docker du projet.
+
 ### Le fichier .env
-Modifier le contenu du fichier "**.env.example**" :
+Pour concevoir le projet avec le nom de "**nameProject**" :
 ```
-NAME_PROJECT=domalara
-NAME_LARAVEL_CONTAINER=domalara_laravel
-NAME_MARIABD_CONTAINER=domalara_mariadb
-NAME_PHPMYADMIN_CONTAINER=domalara_phpmyadmin
-NAME_MAILHOG_CONTAINER=domalara_mailhog
+$ ./bin/name.sh --name=nameProject
 ```
-Par le nom de votre projet, par exemple 'nameProject' :
-```
-NAME_PROJECT=nameProject
-NAME_LARAVEL_CONTAINER=nameProject_laravel
-NAME_MARIABD_CONTAINER=nameProject_mariadb
-NAME_PHPMYADMIN_CONTAINER=nameProject_phpmyadmin
-NAME_MAILHOG_CONTAINER=nameProject_mailhog
-```
-Créé un fichier "**.env**" à partir du fichier "**.env.example**" (copier/coller). <br />
-> [!WARNING]
-> Attention de conserver le fichier "**.env.example**".
+Ceci va créer le fichier "**.env**" avec le nom du projet pour les conteneurs.
 
 ### Les ports utilisés par docker
 Vous pouvez visualiser les ports utilisés par docker avec la commande :
@@ -183,7 +171,6 @@ tcp   LISTEN 0      4096                                   0.0.0.0:3000         
 ```
 Je ne pourrais pas utiliser les ports : 5353, 34968, 27020, 8080, 8020, 3000.
 
-
 ### Modifier l'adresse de port
 Si vous avez besoin de modifier le port, merci de le faire dans le fichier "**.env**".<br />
 > [!WARNING]
@@ -208,21 +195,6 @@ Vous pouvez créer votre conteneur.
 ```
 $ ./install.sh
 ```
-
-### Modifier le fichier d'intallation
-Après l'installation, il faudra modifier le contenu du fichier "**install.sh**" (pour la première installation du projet) :
-```
-./bin/createProject.sh
-#./bin/updateProject.sh
-./bin/start.sh
-```
-Par :
-```
-#./bin/createProject.sh
-./bin/updateProject.sh
-./bin/start.sh
-```
-Si ce n'est pas déjà fait.
 
 ### Modifier les versions
 > [!WARNING]
@@ -360,20 +332,21 @@ FOLDER_PROJECT_LARAVEL=www
 
 <br />
 
-### Packages installés dans le mini-projet
-Lors de la création du projet, il y a l'installation de package que vous pouvez retrouver dans le fichier "**./bin/createProject.sh**"
-```
-#vide
-```
-> [!NOTE]
-> Vous pouvez les retirer si vous en avez pas besoin.
+### Les fichiers de configurations du projet
+Vous pouvez configurer celui-ci :
+* .env : dans le dossier ".docker/config/"
+
+> [!WARNING]
+> Ne pas modifier le fichier "**.env**" du dossier "**project/www**" qui sera et restera vide. 
+
 
 ## Les commandes laravel dans le mini-projet
 Vous allez avoir besoin de faire des commandes laravel sur votre code, pour ce faire :
 ```
 $ ./bin/terminal.sh
 # cd www/
-# 
+# php artisan make:controller UserController
+# php artisan make:mail Contact
 ```
 
 ## Visualiser les messages de la console ou les logs
@@ -395,3 +368,8 @@ $ ./bin/server.sh start
 $ ./bin/server.sh stop
 $ ./bin/server.sh restart
 ```
+
+## En cas de problème lors d'installation
+Par exemple un problème d'adresse de port, comme l'image ci-dessous :
+<br /><img src="./images/screen742.jpg" alt="exemple angular server" width="300" height="175"><br />
+Pas de panique, modifier les ports et relancer l'installation.
