@@ -21,6 +21,7 @@ Version 1.0.0
         <a href="#création-du-conteneur-docker">Création du conteneur (Docker)</a>
         <ul>
             <li><a href="#le-fichier-env">Le fichier .env</a></li>
+            <li><a href="#les-ports-utilisés-par-docker">Les ports utilisés par docker</a></li>
             <li><a href="#modifier-l-adresse-de-port">Modifier l'adresse de port</a></li>
             <li><a href="#installer-le-conteneur">Installer le conteneur</a></li>
             <li><a href="#modifier-le-fichier-d-intallation">Modifier le fichier d'intallation</a></li>
@@ -151,6 +152,38 @@ Créé un fichier "**.env**" à partir du fichier "**.env.example**" (copier/col
 > [!WARNING]
 > Attention de conserver le fichier "**.env.example**".
 
+### Les ports utilisés par docker
+Vous pouvez visualiser les ports utilisés par docker avec la commande :
+```
+$ docker container ls
+CONTAINER ID   IMAGE                    COMMAND                  CREATED         STATUS         PORTS                                                 NAMES
+a0669f134d4e   mongo-express:latest     "tini -- /docker-ent…"   6 seconds ago   Up 3 seconds   0.0.0.0:8080->8081/tcp, :::8080->8081/tcp             donomo_moexpress
+f2097a7768ce   donomo_nodjs             "docker-entrypoint.s…"   6 seconds ago   Up 5 seconds   0.0.0.0:3000->3000/tcp, :::3000->3000/tcp             donomo_nodejs
+0889ec760f46   mongo:latest             "docker-entrypoint.s…"   6 seconds ago   Up 6 seconds   0.0.0.0:27020->27017/tcp, :::27020->27017/tcp         donomo_mongo
+e23b99a411c2   mailhog/mailhog:latest   "MailHog"                6 seconds ago   Up 6 seconds   1025/tcp, 0.0.0.0:8020->8025/tcp, :::8020->8025/tcp   donomo_mailhog
+```
+Ici, je ne pourrais pas utiliser les ports :::8080, :::3000, :::27020 et :::8020, je devrais utiliser d'autre port. Si mon projet utilise un de ces ports, je devrais incrémenter les ports du projet de mon projet de 1 par exemple, pour 8081, 3001, 27021 et 8021 (si j'ai besoin de ces ports).
+
+<br />
+
+> [!WARNING]
+> C'est les ports utilisés par docker sur votre pc, mais ceci ne dis pas si d'autre port son utilisé par votre système.
+
+<br />
+
+Pour visualiser les ports utilisés sur **Linux** :
+```
+$ ss -natu | grep 0.0.0.0
+udp   UNCONN 0      0                                      0.0.0.0:5353                      0.0.0.0:*           
+udp   UNCONN 0      0                                      0.0.0.0:34968                     0.0.0.0:*            
+tcp   LISTEN 0      4096                                   0.0.0.0:27020                     0.0.0.0:*           
+tcp   LISTEN 0      4096                                   0.0.0.0:8080                      0.0.0.0:*          
+tcp   LISTEN 0      4096                                   0.0.0.0:8020                      0.0.0.0:*          
+tcp   LISTEN 0      4096                                   0.0.0.0:3000                      0.0.0.0:* 
+```
+Je ne pourrais pas utiliser les ports : 5353, 34968, 27020, 8080, 8020, 3000.
+
+
 ### Modifier l'adresse de port
 Si vous avez besoin de modifier le port, merci de le faire dans le fichier "**.env**".<br />
 > [!WARNING]
@@ -162,7 +195,7 @@ Si vous avez besoin de modifier le port, merci de le faire dans le fichier "**.e
 
 <br />Un port de votre pc peut être utilisé par un autre projet, il faudra donc modifier celui-ci. Ce qui est vrai sur un pc, ne le sera pas sur les autres, donc on ne modifit pas les valeurs dans le fichier "**.env.example**".<br />
 Il est préférable d'incrémenter à l'identique les ports du projet.<br />
-Si je dois incrémenter de 9 un des ports, je le fais aussi pour les autres dans le fichier "**.env**". Ceci évite de se perdre dans les ports disponibles.<br />
+Si je dois incrémenter de 9 un des ports (je conserve la valeur d'incrémentation la plus haute), je le fais aussi pour les autres dans le fichier "**.env**". Ceci évite de se perdre dans les ports disponibles.<br />
 Exemple :<br />
 ```
 VALUE_LARAVEL_PORT=8009
@@ -177,7 +210,7 @@ $ ./install.sh
 ```
 
 ### Modifier le fichier d'intallation
-Après l'installation, il faudra modifier le contenu du fichier "**install.sh**" :
+Après l'installation, il faudra modifier le contenu du fichier "**install.sh**" (si le projet n'a pas été créée) :
 ```
 ./bin/createProject.sh
 #./bin/updateProject.sh
