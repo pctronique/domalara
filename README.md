@@ -45,6 +45,7 @@ Version 1.0.0
     <li><a href="#les-commandes-angular-dans-le-mini-projet">Les commandes angular dans le mini-projet</a></li>
     <li><a href="#visualiser-les-messages-de-la-console-ou-les-logs">Visualiser les messages de la console ou les logs</a></li>
     <li><a href="#server-start-stop-restart">Server start|stop|restart</a></li>
+    <li><a href="#en-cas-de-problème-lors-d-installation">En cas de problème lors d'installation</a></li>
   </ol>
 </details>
 
@@ -368,7 +369,7 @@ $ ./bin/server.sh stop
 $ ./bin/server.sh restart
 ```
 
-## En cas de problème d'installation
+## En cas de problème lors d'installation
 Par exemple un problème d'adresse de port, comme l'image ci-dessous :
 <br /><img src="./images/screen742.jpg" alt="exemple angular server" width="300" height="175"><br />
 Pas de panique, modifier les ports et relancer l'installation.
