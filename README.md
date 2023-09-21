@@ -67,9 +67,8 @@ Les avantages :<br />
 * Pas de programme à installer sur votre pc (à part docker et un éditeur ou IDE)
 * Travailler à plusieurs avec les mêmes conteneurs à l'identique
 * Prêt à travailler directement sur le code après la création des conteneurs
-* Avoir une base prés remplie lors de la création des conteneurs.<sup>(1)</sup>
+* Avoir une base prés remplie lors de la création des conteneurs.<sup>(1) [Conteneur mariadb](#conteneur-mariadb)</sup>
 <br /> Après installation des conteneurs, on peut directement continuer le code.
-<sup>(1) [Conteneur mariadb](#conteneur-mariadb)</sup>
 
 ### Conteneur laravel
 Il est conçu à partir de l'image du [docker php](https://hub.docker.com/_/php).<br />
