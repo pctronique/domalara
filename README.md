@@ -55,14 +55,14 @@ La base docker pour un projet en laravel. Ceci est une base, vous pouvez le modi
 > Vous devez installer docker pour pouvoir l'utiliser.
 
 <br />
-Vous devez placer votre code dans le dossier "**project/www/**" .
+Vous devez placer votre code dans le dossier " **project/www/** " .
 <br /> 
 
 > [!NOTE]
 > Le serveur démarre automatique au démarrage du conteneur, vous n'avez normalement pas besoin de le démarrer par vous-même.
 
 ### L'avantage d'utiliser docker
-Lorsque vous faites un projet avec docker vous devez transmettre la totalité du projet, les fichiers de création des conteneurs et le code. Pour ce projet, vous devez transmettre le contenu en totalité du dossier "**domalara**" (**que vous pouvez et surtout, devez le renommer au nom de votre projet**) dans un git.<br />
+Lorsque vous faites un projet avec docker vous devez transmettre la totalité du projet, les fichiers de création des conteneurs et le code. Pour ce projet, vous devez transmettre le contenu en totalité du dossier " **domalara** " (**que vous pouvez et surtout, devez le renommer au nom de votre projet**) dans un git.<br />
 Les avantages :<br />
 * Pas de programme à installer sur votre pc (à part docker et un éditeur ou IDE)
 * Travailler à plusieurs avec les mêmes conteneurs à l'identique
@@ -78,10 +78,10 @@ Il installe aussi dans le conteneur :<br />
 * [laravel](https://laravel.com/)
 
 <br />
-Il y a plusieurs packages installés, vous pouvez les retrouver dans le fichier "**.docker/laravel/Dockerfile**".
+Il y a plusieurs packages installés, vous pouvez les retrouver dans le fichier " **.docker/laravel/Dockerfile** ".
 
 <br /> 
-C'est dans ce conteneur que vous allez placer vos codes laravel, dans le dossier "**project/www/**" (qui est lié au conteneur).
+C'est dans ce conteneur que vous allez placer vos codes laravel, dans le dossier " **project/www/** " (qui est lié au conteneur).
 <br /><img src="./images/Screenshot_20230921_104822.png" alt="exemple nodejs server" width="300" height="175"><br />
 
 ### Conteneur mailhog
@@ -97,8 +97,8 @@ Ce conteneur va vous permettre de visualiser votre base de données mariadb (SQL
 ### Conteneur mariadb
 Il est conçu à partir de l'image du [docker mariadb](https://hub.docker.com/_/mariadb).<br />
 Ce conteneur contiendra votre base de donnée. Il est possible de visualiser son contenu à partir du [conteneur phpmyadmin](#conteneur-phpmyadmin)<br />
-Il est possible d'entrer des tables lors de sa création, pour se faire il faudra récupérer les tables sous format sql et les placer dans un dossier et modifier le fichier "**docker-compose.yml**".<br />
-J'ai mis en place un exemple avec la table people "**0001_domalara.sql**" :
+Il est possible d'entrer des tables lors de sa création, pour se faire il faudra récupérer les tables sous format sql et les placer dans un dossier et modifier le fichier " **docker-compose.yml** ".<br />
+J'ai mis en place un exemple avec la table people " **0001_domalara.sql** " :
 ```
 # start data
 - ./.docker/sgbd_data/0001_domalara.sql:/docker-entrypoint-initdb.d/0001_domalara.sql
@@ -133,7 +133,7 @@ Vous pouvez configurer votre serveur ou le php :
 Vous devez avoir installé Docker. 
 Pour la création du conteneur docker pour le projet.
 ### Le fichier .env
-Modifier le contenu du fichier "**.env.example**" :
+Modifier le contenu du fichier " **.env.example** " :
 ```
 NAME_PROJECT=domalara
 NAME_LARAVEL_CONTAINER=domalara_laravel
@@ -149,9 +149,9 @@ NAME_MARIABD_CONTAINER=nameProject_mariadb
 NAME_PHPMYADMIN_CONTAINER=nameProject_phpmyadmin
 NAME_MAILHOG_CONTAINER=nameProject_mailhog
 ```
-Créé un fichier "**.env**" à partir du fichier "**.env.example**" (copier/coller). <br />
+Créé un fichier " **.env** " à partir du fichier " **.env.example** " (copier/coller). <br />
 > [!WARNING]
-> Attention de conserver le fichier "**.env.example**".
+> Attention de conserver le fichier " **.env.example** ".
 
 ### Les ports utilisés par docker
 Vous pouvez visualiser les ports utilisés par docker avec la commande :
@@ -186,17 +186,17 @@ Je ne pourrais pas utiliser les ports : 5353, 34968, 27020, 8080, 8020, 3000.
 
 
 ### Modifier l'adresse de port
-Si vous avez besoin de modifier le port, merci de le faire dans le fichier "**.env**".<br />
+Si vous avez besoin de modifier le port, merci de le faire dans le fichier " **.env** ".<br />
 > [!WARNING]
-> Ne surtout pas le faire dans le fichier "**.env.example**".
+> Ne surtout pas le faire dans le fichier " **.env.example** ".
 
 <br />
 * .env.example : configuration pour tout le monde qui travaille sur le projet
 * .env : configuration pour votre pc
 
-<br />Un port de votre pc peut être utilisé par un autre projet, il faudra donc modifier celui-ci. Ce qui est vrai sur un pc, ne le sera pas sur les autres, donc on ne modifit pas les valeurs dans le fichier "**.env.example**".<br />
+<br />Un port de votre pc peut être utilisé par un autre projet, il faudra donc modifier celui-ci. Ce qui est vrai sur un pc, ne le sera pas sur les autres, donc on ne modifit pas les valeurs dans le fichier " **.env.example** ".<br />
 Il est préférable d'incrémenter à l'identique les ports du projet.<br />
-Si je dois incrémenter de 9 un des ports (je conserve la valeur d'incrémentation la plus haute), je le fais aussi pour les autres dans le fichier "**.env**". Ceci évite de se perdre dans les ports disponibles.<br />
+Si je dois incrémenter de 9 un des ports (je conserve la valeur d'incrémentation la plus haute), je le fais aussi pour les autres dans le fichier " **.env** ". Ceci évite de se perdre dans les ports disponibles.<br />
 Exemple :<br />
 ```
 VALUE_LARAVEL_PORT=8009
@@ -211,7 +211,7 @@ $ ./install.sh
 ```
 
 ### Modifier le fichier d'intallation
-Après l'installation, il faudra modifier le contenu du fichier "**install.sh**" (si le projet n'a pas été créée) :
+Après l'installation, il faudra modifier le contenu du fichier " **install.sh** " (si le projet n'a pas été créée) :
 ```
 ./bin/createProject.sh
 #./bin/updateProject.sh
@@ -242,7 +242,7 @@ laravel CLI version 5.5.8 (c) 2021-2023 Fabien Potencier
 # composer -V
 Composer version 2.6.3 2023-09-15 09:38:21
 ```
-Dand le fichier "**.docker/laravel/Dockerfile**", remplacé :
+Dand le fichier " **.docker/laravel/Dockerfile** ", remplacé :
 ```
 FROM php:fpm
 ```
@@ -280,13 +280,13 @@ RUN pecl install -o -f xdebug-3.2.2
 
 <br />
 
-Pour modifier la version des autres conteneurs, c'est dans le fichier "**docker-compose.yml**" :
+Pour modifier la version des autres conteneurs, c'est dans le fichier " **docker-compose.yml** " :
 ```
 VALUE_MARIABD_VERSION=focal
 VALUE_PHPMYADMIN_VERSION=latest
 VALUE_MAILHOG_VERSION=latest
 ```
-Pour "**focal**", il faudra le remplacer par "**version-focal**".
+Pour " **focal** ", il faudra le remplacer par " **version-focal** ".
 
 ## Rechercher un package (Docker)
 Si vous avez besoin d'un package pour votre projet dans le conteneur. Vous pouvez rechercher les packages disponibles pour le conteneur.
@@ -303,7 +303,7 @@ $ ./bin/terminal.sh
 ```
 
 ### Dans Dockerfile
-Quand vous installez un package, vous devez aussi le rajouter dans le fichier "**.docker/laravel/Dockerfile**", pour le conserver. Au niveau des "**apt install**".
+Quand vous installez un package, vous devez aussi le rajouter dans le fichier " **.docker/laravel/Dockerfile** ", pour le conserver. Au niveau des " **apt install** ".
 ```
 RUN apt install name_package
 ```
@@ -345,14 +345,14 @@ $ ./bin/container_info.sh --mailhog >> mailhog_info.json
 ```
 
 ## Le dossier du projet
-Votre code devra être placé dans le dossier "**project/www**".
+Votre code devra être placé dans le dossier " **project/www** ".
 
 ## Mini-projet
-Il y a un mini-projet laravel pour vous montrer un exemple, mais vous pouvez le retirer en suppriment le dossier "**project/www**".<br />
+Il y a un mini-projet laravel pour vous montrer un exemple, mais vous pouvez le retirer en suppriment le dossier " **project/www** ".<br />
 
 Lors de l'installation, il démarre le serveur laravel du mini-projet sur '**localhost:8000**' si vous n'avez pas modifié le port (sinon il faut modifier le numéro de port du lien) :
 <br /><img src="./images/Screenshot_20230921_104822.png" alt="exemple angular server" width="300" height="175"><br />
-Vous pouvez modifier le nom du dossier du projet dans le fichier "**.env.example**" et aussi dans le fichier "**.env**" :
+Vous pouvez modifier le nom du dossier du projet dans le fichier " **.env.example** " et aussi dans le fichier " **.env** " :
 ```
 FOLDER_PROJECT_LARAVEL=www
 ```
@@ -362,7 +362,7 @@ FOLDER_PROJECT_LARAVEL=www
 <br />
 
 ### Packages installés dans le mini-projet
-Lors de la création du projet, il y a l'installation de package que vous pouvez retrouver dans le fichier "**./bin/createProject.sh**"
+Lors de la création du projet, il y a l'installation de package que vous pouvez retrouver dans le fichier " **./bin/createProject.sh** "
 ```
 #vide
 ```
@@ -379,8 +379,8 @@ $ ./bin/terminal.sh
 
 ## Visualiser les messages de la console ou les logs
 Les messages de la console sont transmis dans un fichier et ne sont pas visibles sur le terminal.<br />
-* Message sur la console dans le fichier : "**projecttmp/logs/laravel/laravel_out.log**".
-* Message d'erreur sur la console dans le fichier : "**projecttmp/logs/laravel/laravel_error.log**".
+* Message sur la console dans le fichier : " **projecttmp/logs/laravel/laravel_out.log** ".
+* Message d'erreur sur la console dans le fichier : " **projecttmp/logs/laravel/laravel_error.log** ".
 
 ## Server start|stop|restart
 Vous pouvez avoir besoin de redémarrer votre serveur, il est possible de le faire facilement avec une commande :
