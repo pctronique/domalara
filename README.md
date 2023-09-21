@@ -191,7 +191,7 @@ Si vous avez besoin de modifier le port, merci de le faire dans le fichier " **.
 > Ne surtout pas le faire dans le fichier " **.env.example** ".
 
 <br />
-* .env.example : configuration pour tout le monde qui travaille sur le projet
+* .env.example : configuration pour tout le monde qui travaille sur le projet <br /> 
 * .env : configuration pour votre pc
 
 <br />Un port de votre pc peut être utilisé par un autre projet, il faudra donc modifier celui-ci. Ce qui est vrai sur un pc, ne le sera pas sur les autres, donc on ne modifit pas les valeurs dans le fichier " **.env.example** ".<br />
