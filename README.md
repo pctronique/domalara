@@ -1,4 +1,4 @@
-# domalara (DOcker MAriadb LAravel)
+# domalara (DOcker MAriadb LARAvel)
 Par [pctronique](https://pctronique.fr/) <br />
 Version 1.0.0
 
