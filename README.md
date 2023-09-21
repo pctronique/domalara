@@ -42,7 +42,7 @@ Version 1.0.0
             <li><a href="#les-fichiers-de-configurations-du-projet">Les fichiers de configurations du projet</a></li>
         </ul>
     </li>
-    <li><a href="#les-commandes-angular-dans-le-mini-projet">Les commandes angular dans le mini-projet</a></li>
+    <li><a href="#les-commandes-laravel-dans-le-mini-projet">Les commandes laravel dans le mini-projet</a></li>
     <li><a href="#visualiser-les-messages-de-la-console-ou-les-logs">Visualiser les messages de la console ou les logs</a></li>
     <li><a href="#server-start-stop-restart">Server start|stop|restart</a></li>
     <li><a href="#en-cas-de-problème-lors-d-installation">En cas de problème lors d'installation</a></li>
