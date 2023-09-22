@@ -1,6 +1,6 @@
 ./bin/install/start_install.sh
 
-#./bin/message.sh
+#./bin/install/message.sh
 
 if [ ! -e .env ]
 then
@@ -27,7 +27,7 @@ chmod 777 -R project
 chmod 777 -R projecttmp
 
 # creation du docker du projet
-if docker-compose up -d ; then
+if docker-compose up --build -d ; then
     ./bin/createProject.sh
     #./bin/updateProject.sh
     ./start.sh
