@@ -185,9 +185,9 @@ Il est préférable d'incrémenter à l'identique les ports du projet.<br />
 Si je dois incrémenter de 9 un des ports (je conserve la valeur d'incrémentation la plus haute), je le fais aussi pour les autres dans le fichier "**.env**". Ceci évite de se perdre dans les ports disponibles.<br />
 Exemple :<br />
 ```
-VALUE_LARAVEL_PORT=8009
-VALUE_PHPMYADMIN_PORT=8089
-VALUE_MAILHOG_DISPLAY_PORT=8029
+VALUE_PROJECT_PORT=8009
+VALUE_SGBD_DISPLAY_PORT=8089
+VALUE_MAIL_DISPLAY_DISPLAY_PORT=8029
 ```
 
 ### Installer le conteneur
@@ -261,9 +261,9 @@ RUN pecl install -o -f xdebug-3.2.2
 
 Pour modifier la version des autres conteneurs, c'est dans le fichier "**.env.example**" :
 ```
-VALUE_MARIABD_VERSION=focal
-VALUE_PHPMYADMIN_VERSION=latest
-VALUE_MAILHOG_VERSION=latest
+VALUE_SGBD_VERSION=focal
+VALUE_SGBD_DISPLAY_VERSION=latest
+VALUE_MAIL_DISPLAY_VERSION=latest
 ```
 Pour "**focal**", il faudra le remplacer par "**version-focal**".
 
@@ -333,7 +333,7 @@ Lors de l'installation, il démarre le serveur laravel du mini-projet sur '**loc
 <br /><img src="./images/Screenshot_20230921_104822.png" alt="exemple angular server" width="300" height="175"><br />
 Vous pouvez modifier le nom du dossier du projet dans le fichier "**.env.example**" et aussi dans le fichier "**.env**" :
 ```
-FOLDER_PROJECT_LARAVEL=www
+FOLDER_PROJECT=www
 ```
 > [!NOTE]
 > Il est préférable de conserver ce nom.

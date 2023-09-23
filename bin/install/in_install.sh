@@ -6,7 +6,7 @@ do
 done < ${0%/*}/../../.env
 
 LINE1="- .\/.docker\/config\/.env:\/home\/project\/www\/.env:rw"
-LINE1_REPLACE="- .\/.docker\/config\/.env:\/home\/project\/$FOLDER_PROJECT_LARAVEL\/.env:rw"
+LINE1_REPLACE="- .\/.docker\/config\/.env:\/home\/project\/$FOLDER_PROJECT\/.env:rw"
 DESACTIVE="#"
 FILE="${0%/*}/../../docker-compose.yml"
 
