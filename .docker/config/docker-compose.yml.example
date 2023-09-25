@@ -7,7 +7,7 @@ services:
 # Setup the PHP container
 ###########################
     laravel:
-        container_name: ${NAME_LARAVEL_CONTAINER}
+        container_name: ${NAME_PROJECT_CONTAINER}
         restart: always
         build: ./.docker/laravel/
         volumes:
@@ -27,24 +27,24 @@ services:
             #- ./.docker/php/ssmtp.conf:/etc/ssmtp/ssmtp.conf:ro
             #- ./.docker/php/hosts:/etc/hosts:ro
         ports:
-            - ${VALUE_LARAVEL_PORT}:8000
+            - ${VALUE_PROJECT_PORT}:8000
             
 
 ###########################
 # Setup the Database (MariaDB) container
 ###########################
     mariadb:
-        container_name: ${NAME_MARIABD_CONTAINER}
-        image: mariadb:${VALUE_MARIABD_VERSION}
+        container_name: ${NAME_SGBD_CONTAINER}
+        image: mariadb:${VALUE_SGBD_VERSION}
         restart: always
         volumes:
             - ./projecttmp/logs/sgbd:/var/log/mysql:rw
             - ./projecttmp/tmp/sgbd:/var/tmp/mysql:rw
             - ./projecttmp/sgbd_data:/var/lib/mysql
             - ./.docker/mariadb/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
-            - ./.docker/sgbd_data/0000_phpmyadmin.sql:/docker-entrypoint-initdb.d/0000_phpmyadmin.sql
+            - ./config/sgbd_data/0000_default.sql:/docker-entrypoint-initdb.d/0000_default.sql
             # start sql
-            - ./.docker/sgbd_data/0001_domalara.sql:/docker-entrypoint-initdb.d/0001_domalara.sql
+            - ./config/sgbd_data/0001_people.sql:/docker-entrypoint-initdb.d/0001_people.sql
             # stop sql
         environment:
             - MYSQL_ROOT_PASSWORD=${SGBD_ROOT_PASSWORD}
@@ -55,8 +55,8 @@ services:
 # Setup the PhpMyAdmin container
 ###########################
     phpmyadmin:
-        container_name: ${NAME_PHPMYADMIN_CONTAINER}
-        image: phpmyadmin/phpmyadmin
+        container_name: ${NAME_SGBD_DISPLAY_CONTAINER}
+        image: phpmyadmin/phpmyadmin:${VALUE_SGBD_DISPLAY_VERSION}
         restart: always
         environment:
             - PMA_PORT=3306
@@ -64,7 +64,7 @@ services:
             - PMA_USER=${SGBD_ROOT_USERNAME}
             - PMA_PASSWORD=${SGBD_ROOT_PASSWORD}
         ports:
-            - ${VALUE_PHPMYADMIN_PORT}:80
+            - ${VALUE_SGBD_DISPLAY_PORT}:80
         depends_on: 
             - mariadb
             
@@ -72,9 +72,9 @@ services:
 # Setup the mailhog container
 ###########################
     mailhog:
-        container_name: ${NAME_MAILHOG_CONTAINER}
-        image: mailhog/mailhog:${VALUE_MAILHOG_VERSION}
+        container_name: ${NAME_MAIL_DISPLAY_CONTAINER}
+        image: mailhog/mailhog:${VALUE_MAIL_DISPLAY_VERSION}
         restart: always
         ports:
-            - ${VALUE_MAILHOG_DISPLAY_PORT}:8025
+            - ${VALUE_MAIL_DISPLAY_PORT}:8025
             

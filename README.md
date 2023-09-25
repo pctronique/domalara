@@ -185,7 +185,7 @@ Il est préférable d'incrémenter à l'identique les ports du projet.<br />
 Si je dois incrémenter de 9 un des ports (je conserve la valeur d'incrémentation la plus haute), je le fais aussi pour les autres dans le fichier "**.env**". Ceci évite de se perdre dans les ports disponibles.<br />
 Exemple :<br />
 ```
-VALUE_LARAVEL_PORT=8009
+VALUE_PROJECT_PORT=8009
 VALUE_PHPMYADMIN_PORT=8089
 VALUE_MAILHOG_DISPLAY_PORT=8029
 ```
@@ -333,7 +333,7 @@ Lors de l'installation, il démarre le serveur laravel du mini-projet sur '**loc
 <br /><img src="./images/Screenshot_20230921_104822.png" alt="exemple angular server" width="300" height="175"><br />
 Vous pouvez modifier le nom du dossier du projet dans le fichier "**.env.example**" et aussi dans le fichier "**.env**" :
 ```
-FOLDER_PROJECT_LARAVEL=www
+FOLDER_PROJECT=www
 ```
 > [!NOTE]
 > Il est préférable de conserver ce nom.

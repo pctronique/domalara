@@ -1,4 +1,6 @@
-/projecttmp/
+/.env
+/projecttmp
+/tmp_install
+/install_tmp
 /project/www/.env
 /project/www/vendor/
-/.env

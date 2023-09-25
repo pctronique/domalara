@@ -24,7 +24,8 @@ then
    do   
       export $line
    done < "$FOLDER_BASE/.env"
-   
+
+   rm -f -r "$FOLDER_BASE/project/$FOLDER_PROJECT"
    $FOLDER_BASE/bin/gitignore.sh
 
 fi
