@@ -13,4 +13,4 @@ FILE="${0%/*}/../../docker-compose.yml"
 sed -i "s/$DESACTIVE$LINE1/$LINE1_REPLACE/" $FILE
 
 cd ${0%/*}/../../
-docker-compose up -d
+docker compose up -d
