@@ -12,13 +12,21 @@ if ! ${0%/*}/php_create_config.sh ; then
   exit 1
 fi
 
-#cd ${0%/*}/../
-#if ! docker compose up -d ; then
-#  exit 1
-#fi
+if [ -e ${0%/*}/../../tmp_install/type_install ]
+then
+  while read line  
+  do   
+    export $line
+  done < ${0%/*}/../../tmp_install/type_install
+fi
 
-if ! ${0%/*}/project_bash.sh "composer create-project laravel/laravel $FOLDER_PROJECT $@" ; then
+if [ -z "$IS_CREATE_FOLDER" ]
+then
+  if ! ${0%/*}/project_bash.sh "composer create-project laravel/laravel $FOLDER_PROJECT $@" ; then
     exit 1
+  else
+    echo "IS_CREATE_FOLDER=false" >> "${0%/*}/../../tmp_install/type_install"
+  fi
 fi
 if ! ${0%/*}/project_bash.sh "mv $FOLDER_PROJECT/.env $FOLDER_PROJECT/.env.old" ; then
     exit 1
