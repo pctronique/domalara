@@ -8,7 +8,7 @@ do
    export $line
 done < ${0%/*}/../../.env
 
-if ! ${0%/*}/install/php_create_config.sh ; then
+if ! ${0%/*}/php_create_config.sh ; then
   exit 1
 fi
 
@@ -23,7 +23,7 @@ fi
 if ! ${0%/*}/project_bash.sh "mv $FOLDER_PROJECT/.env $FOLDER_PROJECT/.env.old" ; then
     exit 1
 fi
-if ! ${0%/*}/install/in_install.sh ; then
+if ! ${0%/*}/in_install.sh ; then
   exit 1
 fi
 if ! ${0%/*}/project_bash.sh "cd $FOLDER_PROJECT && composer dump-autoload" ; then
