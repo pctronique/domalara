@@ -34,6 +34,20 @@ fi
 if ! ${0%/*}/in_install.sh ; then
   exit 1
 fi
+
+if [ -e ${0%/*}/packages_install.list ]
+then
+  while read line  
+  do   
+    if [ ! -z "$line" ]
+    then
+      if ! ${0%/*}/project_bash.sh "cd $FOLDER_PROJECT/ && composer require $line" ; then
+        exit 1
+      fi
+    fi
+  done < ${0%/*}/packages_install.list
+fi
+
 if ! ${0%/*}/project_bash.sh "cd $FOLDER_PROJECT && composer dump-autoload" ; then
     exit 1
 fi
