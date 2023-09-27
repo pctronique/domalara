@@ -17,8 +17,11 @@ then
 fi
 
 while read line  
-do   
-   export $line
+do
+    if [ ! -z "$line" ]
+    then
+        export $line
+    fi
 done < $ENV_DEF
 
 rm -f "$FILE_ENV"
@@ -53,7 +56,6 @@ TEXT_COLOR_DEF=$'\e[39m'
 RENUMB='^[0-9]+$'
 
 echo -e $TEXT_BOLD$COLOR_DEF_REP$'Pour la création des conteneurs du projet, il faut répondre à quelque question.'
-
 
 if ! ${0%/*}/create_env_name.sh "$FILE_EXP" ; then
   exit 1
