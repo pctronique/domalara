@@ -15,6 +15,7 @@ rm -r -f "${0%/*}/../../$PROJECT_TMP_MAIN/env_version.txt"
 
 ${0%/*}/recup_version_php.sh
 ${0%/*}/recup_version_composer.sh
+${0%/*}/recup_version_xdebug.sh
 
 while read line  
 do   
