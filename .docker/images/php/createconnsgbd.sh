@@ -73,17 +73,17 @@ if [ ! -f "${PHP_FOLDER_PROJECT}/.env.local.example" ]; then
     if [ ! -f "${PHP_FOLDER_PROJECT}/.env.local.example" ]; then
         cp ${PHP_FOLDER_INIT}/.env.local.example ${PHP_FOLDER_PROJECT}/.env.local.example
     fi
+fi
 
-    if [ -f "${PHP_FOLDER_PROJECT}/.env.local.example" ]; then
-        cp ${PHP_FOLDER_PROJECT}/.env.local.example ${PHP_FOLDER_PROJECT}/.env
-        sed -i "s/PHP_SGBD_TYPE/${PHP_SGBD_TYPE}/" "${PHP_FOLDER_PROJECT}/.env"
-        sed -i "s/PHP_SGBD_HOST/${PHP_SGBD_HOST}/" "${PHP_FOLDER_PROJECT}/.env"
-        sed -i "s/PHP_SGBD_DATABASE/${PHP_SGBD_DATABASE}/" "${PHP_FOLDER_PROJECT}/.env"
-        sed -i "s/PHP_SGBD_USER/${PHP_SGBD_USER}/" "${PHP_FOLDER_PROJECT}/.env"
-        sed -i "s/PHP_SGBD_PASSWORD/${PHP_SGBD_PASSWORD}/" "${PHP_FOLDER_PROJECT}/.env"
-        sed -i "s/PHP_MAIL_MAILER/${PHP_MAIL_MAILER}/" "${PHP_FOLDER_PROJECT}/.env"
-        sed -i "s/PHP_MAIL_HOST/${PHP_MAIL_HOST}/" "${PHP_FOLDER_PROJECT}/.env"
-        sed -i "s/PHP_MAIL_PORT/${PHP_MAIL_PORT}/" "${PHP_FOLDER_PROJECT}/.env"
-        sed -i "s/PHP_NAME_PROJECT/${PHP_NAME_PROJECT}/" "${PHP_FOLDER_PROJECT}/.env"
-    fi
+if [ -f "${PHP_FOLDER_PROJECT}/.env.local.example" ]; then
+    cp ${PHP_FOLDER_PROJECT}/.env.local.example ${PHP_FOLDER_PROJECT}/.env
+    sed -i "s/PHP_SGBD_TYPE/${PHP_SGBD_TYPE}/" "${PHP_FOLDER_PROJECT}/.env"
+    sed -i "s/PHP_SGBD_HOST/${PHP_SGBD_HOST}/" "${PHP_FOLDER_PROJECT}/.env"
+    sed -i "s/PHP_SGBD_DATABASE/${PHP_SGBD_DATABASE}/" "${PHP_FOLDER_PROJECT}/.env"
+    sed -i "s/PHP_SGBD_USER/${PHP_SGBD_USER}/" "${PHP_FOLDER_PROJECT}/.env"
+    sed -i "s/PHP_SGBD_PASSWORD/${PHP_SGBD_PASSWORD}/" "${PHP_FOLDER_PROJECT}/.env"
+    sed -i "s/PHP_MAIL_MAILER/${PHP_MAIL_MAILER}/" "${PHP_FOLDER_PROJECT}/.env"
+    sed -i "s/PHP_MAIL_HOST/${PHP_MAIL_HOST}/" "${PHP_FOLDER_PROJECT}/.env"
+    sed -i "s/PHP_MAIL_PORT/${PHP_MAIL_PORT}/" "${PHP_FOLDER_PROJECT}/.env"
+    sed -i "s/PHP_NAME_PROJECT/${PHP_NAME_PROJECT}/" "${PHP_FOLDER_PROJECT}/.env"
 fi
