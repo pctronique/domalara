@@ -116,6 +116,8 @@ RUN chmod +x ${PHP_FOLDER_INIT}/updateProject.sh
 COPY createconnsgbd.sh ${PHP_FOLDER_INIT}
 RUN chmod +x ${PHP_FOLDER_INIT}/createconnsgbd.sh
 
+COPY .env.local.example ${PHP_FOLDER_INIT}
+
 COPY docker-create-symfony-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-create-symfony-entrypoint.sh
 
@@ -128,6 +130,18 @@ RUN update-rc.d startserver defaults
 RUN composer global require laravel/installer
 RUN export PATH=$PATH:/var/composer/vendor/bin
 #composer create-project laravel/laravel ./
+
+#ARG PHP_SGBD_DATABASE
+#ENV PHP_SGBD_DATABASE=${PHP_SGBD_DATABASE}
+
+#ARG PHP_SGBD_PASSWORD
+#ENV PHP_SGBD_PASSWORD=${PHP_SGBD_PASSWORD}
+
+#ARG PHP_SGBD_USER
+#ENV PHP_SGBD_USER=${PHP_SGBD_USER}
+
+#ARG PHP_SGBD_DBNAME
+#ENV PHP_SGBD_DBNAME=${PHP_SGBD_DBNAME}
 
 ENTRYPOINT ["docker-create-symfony-entrypoint.sh", "docker-php-entrypoint"]
 

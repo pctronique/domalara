@@ -7,3 +7,7 @@
 /www/config/filedotenv.php
 /www/config/.env
 /www/data
+/www/vendor
+/www/.env
+/www/.env.local.example
+/www/composer.lock
