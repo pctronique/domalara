@@ -1,0 +1,13 @@
+/nbproject/private/
+/.vscode
+/.env
+/projecttmp/
+/.dockertmp/
+/www/config/config_sgbd.php
+/www/config/filedotenv.php
+/www/config/.env
+/www/data
+/www/vendor
+/www/.env
+/www/.env.local.example
+/www/composer.lock
