@@ -1,13 +1,13 @@
 
 services:
 ###########################
-# Setup the PHP container
+# Setup the laravel container
 ###########################
-    php:
-        container_name: ${NAME_PROJECT}_php
+    laravel:
+        container_name: ${NAME_PROJECT}_laravel
         restart: always
         build: 
-            context: ./.docker/images/php/
+            context: ./.docker/images/laravel/
             args:
                 - VALUE_PHP_VERSION=${VALUE_PHP_VERSION}
                 - VALUE_XDEBUG_VERSION=${VALUE_XDEBUG_VERSION}
@@ -18,15 +18,15 @@ services:
             - ./config/data:/docker-entrypoint-initdata.d:rw
             - ./config/.env.local.example:/usr/local/apache2/www/.env.local.example
             - ./config/dockercron:/var/docker/cron/dockercron:rw
-            - ./.docker/containers/php/opcache-recommended.ini:/usr/local/etc/php/conf.d/opcache-recommended.ini:ro
-            - ./.docker/containers/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
-            - ./.docker/containers/php/php.ini:/usr/local/etc/php/conf.d/php.ini:ro
-            - ./.docker/containers/php/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
-            - ./.dockertmp/log/php:/var/log/docker/php:rw
+            - ./.docker/containers/laravel/opcache-recommended.ini:/usr/local/etc/php/conf.d/opcache-recommended.ini:ro
+            - ./.docker/containers/laravel/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+            - ./.docker/containers/laravel/php.ini:/usr/local/etc/php/conf.d/php.ini:ro
+            - ./.docker/containers/laravel/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
+            - ./.dockertmp/log/laravel:/var/log/docker/php:rw
             - ./.dockertmp/log/xdebug:/var/log/docker/xdebug:rw
-            - ./.dockertmp/tmp/php:/var/tmp/docker/php:rw
+            - ./.dockertmp/tmp/laravel:/var/tmp/docker/php:rw
         ports:
-            - ${VALUE_HTTPD_PORT}:8000
+            - ${VALUE_LARAVEL_PORT}:8000
         environment:
             - TZ=${VALUE_TIMEZONES}
             - PHP_FOLDER_DATA=data
