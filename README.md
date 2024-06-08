@@ -82,7 +82,7 @@ Vous devez avoir installé [docker-desktop](https://www.docker.com/products/dock
 
 Modifier le nom du projet dans le fichier « .env.example » :
 ```
-NAME_PROJECT=projectphp
+NAME_PROJECT=domalara
 ```
 Mettre le nom du projet.
 
